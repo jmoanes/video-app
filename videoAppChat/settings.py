@@ -151,7 +151,7 @@ import dj_database_url
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['video-app.onrender.com']  # replace with your render URL
+ALLOWED_HOSTS = ['https://video-app-g9xr.onrender.com/']  # replace with your render URL
 
 DATABASES = {
     'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
