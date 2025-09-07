@@ -1,0 +1,86 @@
+{% extends 'videoChats/base.html' %}
+
+{% block title %}Create Room - Video Chat App{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card slide-up">
+            <div class="card-header bg-primary text-white text-center">
+                <h4 class="mb-0">
+                    <i class="fas fa-plus me-2"></i>Create New Room
+                </h4>
+            </div>
+            <div class="card-body p-4">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.name.id_for_label }}" class="form-label">Room Name</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="fas fa-video"></i>
+                            </span>
+                            {{ form.name }}
+                        </div>
+                        {% if form.name.errors %}
+                            <div class="text-danger small mt-1">
+                                {{ form.name.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="{{ form.description.id_for_label }}" class="form-label">Description (Optional)</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="fas fa-info-circle"></i>
+                            </span>
+                            {{ form.description }}
+                        </div>
+                        {% if form.description.errors %}
+                            <div class="text-danger small mt-1">
+                                {{ form.description.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="d-flex gap-3">
+                        <a href="{% url 'videoChats:home' %}" class="btn btn-secondary flex-fill">
+                            <i class="fas fa-arrow-left me-2"></i>Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary flex-fill">
+                            <i class="fas fa-plus me-2"></i>Create Room
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Room Creation Tips -->
+        <div class="card mt-4 slide-up">
+            <div class="card-header bg-light">
+                <h6 class="mb-0">
+                    <i class="fas fa-lightbulb me-2 text-warning"></i>Tips for Great Rooms
+                </h6>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled mb-0">
+                    <li class="mb-2">
+                        <i class="fas fa-check text-success me-2"></i>
+                        Use descriptive names that participants will recognize
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-check text-success me-2"></i>
+                        Add a brief description to help others understand the purpose
+                    </li>
+                    <li class="mb-0">
+                        <i class="fas fa-check text-success me-2"></i>
+                        Share the invite code with your intended participants
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

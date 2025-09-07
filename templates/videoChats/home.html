@@ -1,0 +1,185 @@
+{% extends 'videoChats/base.html' %}
+
+{% block title %}Home - Video Chat App{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <!-- Hero Section -->
+        <div class="text-center mb-5 fade-in">
+            <h1 class="display-4 fw-bold text-primary mb-3">
+                <i class="fas fa-video me-3"></i>Welcome to VideoChat
+            </h1>
+            <p class="lead text-muted mb-4">
+                Connect with friends, family, and colleagues through high-quality video calls with real-time chat.
+            </p>
+            
+            {% if user.is_authenticated %}
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <a href="{% url 'videoChats:create_room' %}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-plus me-2"></i>Create New Room
+                    </a>
+                    <a href="{% url 'videoChats:join_room' %}" class="btn btn-secondary btn-lg">
+                        <i class="fas fa-sign-in-alt me-2"></i>Join Room
+                    </a>
+                </div>
+            {% else %}
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <a href="{% url 'videoChats:register' %}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-user-plus me-2"></i>Get Started
+                    </a>
+                    <a href="{% url 'login' %}" class="btn btn-secondary btn-lg">
+                        <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+
+        {% if user.is_authenticated %}
+            <!-- User's Rooms -->
+            {% if user_rooms %}
+                <div class="card mb-4 slide-up">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">
+                            <i class="fas fa-home me-2"></i>Your Rooms
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            {% for room in user_rooms %}
+                                <div class="col-md-6 col-lg-4 mb-3">
+                                    <div class="card h-100 border-0 shadow-sm">
+                                        <div class="card-body text-center">
+                                            <div class="mb-3">
+                                                <i class="fas fa-video fa-2x text-primary"></i>
+                                            </div>
+                                            <h6 class="card-title">{{ room.name }}</h6>
+                                            <p class="card-text text-muted small">
+                                                {{ room.participant_count }} participant{{ room.participant_count|pluralize }}
+                                            </p>
+                                            <div class="d-grid">
+                                                <a href="{% url 'videoChats:room_detail' room.id %}" class="btn btn-primary btn-sm">
+                                                    <i class="fas fa-play me-1"></i>Join
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            <!-- Recent Rooms -->
+            {% if recent_rooms %}
+                <div class="card slide-up">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">
+                            <i class="fas fa-clock me-2"></i>Recent Rooms
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            {% for room in recent_rooms %}
+                                <div class="col-md-6 col-lg-4 mb-3">
+                                    <div class="card h-100 border-0 shadow-sm">
+                                        <div class="card-body text-center">
+                                            <div class="mb-3">
+                                                <i class="fas fa-video fa-2x text-secondary"></i>
+                                            </div>
+                                            <h6 class="card-title">{{ room.name }}</h6>
+                                            <p class="card-text text-muted small">
+                                                Created by {{ room.created_by.username }}
+                                            </p>
+                                            <div class="d-grid">
+                                                <a href="{% url 'videoChats:room_detail' room.id %}" class="btn btn-secondary btn-sm">
+                                                    <i class="fas fa-sign-in-alt me-1"></i>Join
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            <!-- Quick Actions -->
+            <div class="row mt-5">
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center h-100 slide-up">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <i class="fas fa-share-alt fa-2x text-primary"></i>
+                            </div>
+                            <h6>Share Room</h6>
+                            <p class="text-muted small">Share your room with others using invite codes</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center h-100 slide-up">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <i class="fas fa-comments fa-2x text-primary"></i>
+                            </div>
+                            <h6>Real-time Chat</h6>
+                            <p class="text-muted small">Chat with participants during video calls</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center h-100 slide-up">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <i class="fas fa-mobile-alt fa-2x text-primary"></i>
+                            </div>
+                            <h6>Mobile Ready</h6>
+                            <p class="text-muted small">Works seamlessly on all devices</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <!-- Features for non-authenticated users -->
+            <div class="row mt-5">
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center h-100 slide-up">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <i class="fas fa-video fa-2x text-primary"></i>
+                            </div>
+                            <h6>High Quality Video</h6>
+                            <p class="text-muted small">Crystal clear video calls with WebRTC technology</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center h-100 slide-up">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <i class="fas fa-shield-alt fa-2x text-primary"></i>
+                            </div>
+                            <h6>Secure & Private</h6>
+                            <p class="text-muted small">End-to-end encryption for your conversations</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center h-100 slide-up">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <i class="fas fa-users fa-2x text-primary"></i>
+                            </div>
+                            <h6>Group Calls</h6>
+                            <p class="text-muted small">Host meetings with multiple participants</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

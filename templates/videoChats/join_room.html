@@ -1,0 +1,84 @@
+{% extends 'videoChats/base.html' %}
+
+{% block title %}Join Room - Video Chat App{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card slide-up">
+            <div class="card-header bg-primary text-white text-center">
+                <h4 class="mb-0">
+                    <i class="fas fa-sign-in-alt me-2"></i>Join a Room
+                </h4>
+            </div>
+            <div class="card-body p-4">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="mb-4">
+                        <label for="invite_code" class="form-label">Room Invite Code</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="fas fa-key"></i>
+                            </span>
+                            <input type="text" name="invite_code" class="form-control" id="invite_code" 
+                                   placeholder="Enter the 8-character invite code" 
+                                   maxlength="8" required>
+                        </div>
+                        <div class="form-text">
+                            <i class="fas fa-info-circle me-1"></i>
+                            Enter the invite code provided by the room creator
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex gap-3">
+                        <a href="{% url 'videoChats:home' %}" class="btn btn-secondary flex-fill">
+                            <i class="fas fa-arrow-left me-2"></i>Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary flex-fill">
+                            <i class="fas fa-sign-in-alt me-2"></i>Join Room
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- How to Join -->
+        <div class="card mt-4 slide-up">
+            <div class="card-header bg-light">
+                <h6 class="mb-0">
+                    <i class="fas fa-question-circle me-2 text-info"></i>How to Join a Room
+                </h6>
+            </div>
+            <div class="card-body">
+                <ol class="mb-0">
+                    <li class="mb-2">
+                        Ask the room creator for the invite code
+                    </li>
+                    <li class="mb-2">
+                        Enter the 8-character code in the field above
+                    </li>
+                    <li class="mb-0">
+                        Click "Join Room" to enter the video chat
+                    </li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- Create Your Own -->
+        <div class="card mt-4 slide-up">
+            <div class="card-header bg-light">
+                <h6 class="mb-0">
+                    <i class="fas fa-lightbulb me-2 text-warning"></i>Don't have a code?
+                </h6>
+            </div>
+            <div class="card-body text-center">
+                <p class="mb-3">Create your own room and invite others to join!</p>
+                <a href="{% url 'videoChats:create_room' %}" class="btn btn-primary">
+                    <i class="fas fa-plus me-2"></i>Create New Room
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
